@@ -125,12 +125,15 @@ USE_TZ = True
 STATIC_URL = 'static/'
 # Directorio donde collectstatic juntará archivos para producción (requerido por WhiteNoise)
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-# Directorios adicionales de estáticos en desarrollo (puede estar vacío si no existe)
+
+# Directorios adicionales de estáticos en desarrollo
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
-# Almacenamiento recomendado por WhiteNoise para archivos comprimidos y con hash
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Almacenamiento recomendado por WhiteNoise (usamos CompressedStaticFilesStorage para evitar errores de manifest si faltan archivos)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
