@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,11 @@ SECRET_KEY = 'django-insecure-!bq9gbh*ku(xsu@q52!ys$^*)r^&h@d9i7tfan3!-bs$(c@sfl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Permite hosts de Railway y locales por defecto; configurable por env
 ALLOWED_HOSTS = ['*']
+
+# CSRF Trusted Origins para Railway
+CSRF_TRUSTED_ORIGINS = ['https://*.railway.app']
 
 
 # Application definition
@@ -43,6 +48,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -117,9 +123,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+# Directorio donde collectstatic juntará archivos para producción (requerido por WhiteNoise)
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+# Directorios adicionales de estáticos en desarrollo (puede estar vacío si no existe)
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+# Almacenamiento recomendado por WhiteNoise para archivos comprimidos y con hash
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

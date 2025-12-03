@@ -1,0 +1,1 @@
+web: python manage.py migrate && python manage.py collectstatic --noinput && gunicorn ODS1.wsgi --bind 0.0.0.0:$PORT
